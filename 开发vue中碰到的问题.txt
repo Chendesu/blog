@@ -1,0 +1,18 @@
+开发vue中碰到的问题
+出现空白页面，但没有报错
+1、路由必须有入口，即router/index.js文件里的路由第一个路径为"/"
+2、可用router.beforeEach来控制路由
+  router.beforeEach((to, from, next) => {
+  if (to.matched.length === 0) { // 如果未匹配到路由
+    from.path ? next({ path: from.path }) : next('/') // 如果上级也未匹配到路由则跳转主页面，如果上级能匹配到则转上级路由
+  } else {
+    next() // 如果匹配到正确跳转
+  }
+})
+  通过router.beforeEach来控制路由，非'/Login'或'/'路径的都会跳转到'/'路径
+3、vue-router路径无法正确跳转
+  原因分析：vue-router配置路由，当代码分割和懒加载时，由于webpack配置不当，导致懒加载chunk时相对路径出现混乱从而加载chunk失败
+  解决方法：修改config文件夹下的index.js文件
+    build: [
+      assetsPublicPath: './'
+    ]
