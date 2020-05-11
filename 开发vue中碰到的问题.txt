@@ -1,5 +1,7 @@
 开发vue中碰到的问题
-出现空白页面，但没有报错
+
+
+出现空白页面，但没有报错,有3种可能
 1、路由必须有入口，即router/index.js文件里的路由第一个路径为"/"
 2、可用router.beforeEach来控制路由
   router.beforeEach((to, from, next) => {
@@ -16,3 +18,36 @@
     build: [
       assetsPublicPath: './'
     ]
+
+使用Form表单组件
+    使用富文本编辑器
+      安装  npm install wangEditor
+      引入  import E from 'wangeditor'
+      调用  let editor = new E('#editor')
+            editor.create()
+      详细文档 https://www.kancloud.cn/wangfupeng/wangeditor3/332599
+    自定义表单验证
+      引入了富文本编辑器，iview的Form表单组件无法验证富文本编辑器，可以自定义验证
+      定义函数
+        let validateEditor = (rule, value, callback) => {
+          //判断富文本编辑器是否为空
+          if (editor.txt.text() === '') {
+            return callback(new Error('文章内容不为空'))
+          }
+        }
+      data里声明验证规则
+        data(){
+          return {
+            ruleValidate: {
+              content: [
+                { validator: validateEditor, trigger: 'blur' }
+              ],
+            }
+          }
+        }
+        注：自定义校验是validator，不是validate/validateField/resetFields
+
+
+
+
+

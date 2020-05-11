@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主机： localhost
--- 生成日期： 2020-04-30 16:56:12
+-- 生成日期： 2020-05-09 17:24:47
 -- 服务器版本： 5.7.26
 -- PHP 版本： 7.3.4
 
@@ -32,8 +32,9 @@ CREATE TABLE `photo` (
   `id` int(4) NOT NULL,
   `username` varchar(50) NOT NULL,
   `phototitle` varchar(50) NOT NULL,
-  `photocontent` longtext NOT NULL,
-  `phototime` int(50) NOT NULL,
+  `photourl` varchar(100) NOT NULL,
+  `photocontent` text NOT NULL,
+  `phototime` varchar(50) NOT NULL,
   `photolabel` varchar(50) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 

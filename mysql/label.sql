@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主机： localhost
--- 生成日期： 2020-04-30 16:56:24
+-- 生成日期： 2020-05-09 17:24:38
 -- 服务器版本： 5.7.26
 -- PHP 版本： 7.3.4
 
@@ -30,8 +30,20 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `label` (
   `id` int(4) NOT NULL,
-  `labelname` varchar(50) NOT NULL
+  `labelname` varchar(50) NOT NULL,
+  `username` varchar(50) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- 转存表中的数据 `label`
+--
+
+INSERT INTO `label` (`id`, `labelname`, `username`) VALUES
+(1, '生活', 'admin'),
+(2, 'idol', 'admin'),
+(3, 'test', 'admin'),
+(7, 'ceshi123', 'admin'),
+(6, 'ceshi', 'admin');
 
 --
 -- 转储表的索引
@@ -51,7 +63,7 @@ ALTER TABLE `label`
 -- 使用表AUTO_INCREMENT `label`
 --
 ALTER TABLE `label`
-  MODIFY `id` int(4) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

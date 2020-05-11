@@ -17,7 +17,7 @@
                           <Icon type="md-contact" />
                           用户管理
                       </MenuItem>
-                      <MenuItem name="2" @click.native="$goRoute('/Dairy')">
+                      <MenuItem name="2" @click.native="$goRoute('/Diary')">
                           <Icon type="md-document" />
                           文章管理
                       </MenuItem>
@@ -44,7 +44,7 @@
         v-model="modal"
         @on-ok="ok"
         @on-cancel="cancel">
-        <p>是否确定删除？</p>
+        <p>是否确定退出登录？</p>
     </Modal>
     </div>
 

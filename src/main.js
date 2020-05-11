@@ -6,8 +6,10 @@ import router from './router'
 import VueRouter from 'vue-router'
 import axios from 'axios'
 import store from './store'
-import ViewUI from 'view-design'
+import iView from 'iview'
+// import ViewUI from 'view-design'
 import 'view-design/dist/styles/iview.css'
+
 // import VueWechatTitle from 'vue-wechat-title'
 
 // router.beforeEach((to, from, next) => {
@@ -36,7 +38,8 @@ import 'view-design/dist/styles/iview.css'
 Vue.config.productionTip = false
 
 Vue.use(VueRouter)
-Vue.use(ViewUI)
+Vue.use(iView)
+// Vue.use(ViewUI)
 
 Vue.prototype.$axios = axios
 

@@ -3,7 +3,7 @@ import Router from 'vue-router'
 import Login from '@/components/Login'
 import home from '@/components/home'
 import User from '@/components/User'
-import Dairy from '@/components/Dairy'
+import Diary from '@/components/Diary'
 import Photo from '@/components/Photo'
 import Label from '@/components/Label'
 
@@ -33,9 +33,9 @@ export default new Router({
           }
         },
         {
-          path: '/Dairy',
-          name: 'Dairy',
-          component: Dairy,
+          path: '/Diary',
+          name: 'Diary',
+          component: Diary,
           meta: {
             title: '日志管理页面'
           }

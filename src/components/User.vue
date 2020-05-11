@@ -1,7 +1,7 @@
 <template>
   <Row>
     <Row>
-        <i-col span="24" style="text-align: left">
+        <i-col span="24" style="text-align: left" v-if="power==0">
           <Button type="primary" @click="addUser" style="margin-bottom: 12px">添加</Button>
         </i-col>
     </Row>
@@ -40,7 +40,7 @@
     </Row>
     <Row>
       <i-col span="24">
-        <Page :total="totalCount" :current.sync="curPage" :page-size="pageSize"  show-total @on-change="page" style="margin-top:24px" />
+        <Page :total="totalCount" :current.sync="curPage" :page-size="pageSize"  show-total @on-change="page"/>
       </i-col>
     </Row>
 
@@ -60,6 +60,11 @@
       <Form ref="formInline">
         <FormItem prop="username" v-show="formStatus=='add'">
             <i-input type="text" clearable v-model="formInline.username" placeholder="请输入用户名">
+                <Icon type="ios-person-outline" slot="prepend"></Icon>
+            </i-input>
+        </FormItem>
+        <FormItem prop="username" v-show="formStatus=='edit'">
+            <i-input type="text" clearable v-model="formInline.username" placeholder="请输入用户名" disabled>
                 <Icon type="ios-person-outline" slot="prepend"></Icon>
             </i-input>
         </FormItem>
@@ -121,14 +126,17 @@ export default{
       ModalTitle: '',
       formStatus: '',
       curPage: 1,
-      totalCount: 12,
-      totalPages: 10,
+      totalCount: 0,
+      // totalPages: 10,
       pageSize: 5,
       username: '',
       power: ''
     }
   },
+  computed: {
+  },
   created () {
+
   },
   mounted () {
     this.query(this.curPage, this.pageSize)
@@ -141,9 +149,9 @@ export default{
         'pageSize': pageSize
       }
       axios.post(url, qs.stringify(param)).then(res => {
-        console.log(res.data)
+        // console.log(res.data)
         this.data = res.data.data
-        this.totalCount = res.data.total
+        this.totalCount = Number(res.data.total)
         this.username = res.data.username
         this.power = res.data.power
       })
@@ -156,6 +164,7 @@ export default{
     },
     // 点击编辑
     edit (index) {
+      this.formInline.username = this.data[index].username
       this.idx = index
       this.ModalTitle = '修改密码'
       this.modal1 = true
@@ -188,10 +197,10 @@ export default{
     },
     // 确定
     asyncOK () {
-      if (this.formStatus == 'edit') {
+      if (this.formStatus === 'edit') {
         this.editFun()
       }
-      if (this.formStatus == 'add') {
+      if (this.formStatus === 'add') {
         this.addFun()
       }
     },
