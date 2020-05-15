@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主机： localhost
--- 生成日期： 2020-05-09 17:24:47
+-- 生成日期： 2020-05-15 16:27:00
 -- 服务器版本： 5.7.26
 -- PHP 版本： 7.3.4
 
@@ -33,10 +33,22 @@ CREATE TABLE `photo` (
   `username` varchar(50) NOT NULL,
   `phototitle` varchar(50) NOT NULL,
   `photourl` varchar(100) NOT NULL,
-  `photocontent` text NOT NULL,
+  `photocontent` text,
   `phototime` varchar(50) NOT NULL,
   `photolabel` varchar(50) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- 转存表中的数据 `photo`
+--
+
+INSERT INTO `photo` (`id`, `username`, `phototitle`, `photourl`, `photocontent`, `phototime`, `photolabel`) VALUES
+(2, 'admin', '图片', 'qa75ul3w1.bkt.clouddn.com/15894449645ebd0164128ad.jpg', '图片图片', '2020-05-14 16:29:24', '生活'),
+(3, 'admin', 'cry', 'qa75ul3w1.bkt.clouddn.com/15894458825ebd04fabe671.jpg', 'test', '2020-05-14 16:44:42', '生活'),
+(4, 'admin', '123', 'qa75ul3w1.bkt.clouddn.com/15894473935ebd0ae1cd004.jpg', '', '2020-05-14 17:09:53', 'idol'),
+(5, 'admin', '123', 'qa75ul3w1.bkt.clouddn.com/15894474085ebd0af0acde7.jpg', '', '2020-05-14 17:10:08', 'idol'),
+(6, 'admin', 'test', 'qa75ul3w1.bkt.clouddn.com/15894482975ebd0e69f103b.gif', '111', '2020-05-14 17:24:57', '测试'),
+(10, 'chen', '测试', 'qa75ul3w1.bkt.clouddn.com/15895240865ebe3676cf20d.jpg', '测试测试', '2020-05-15 14:28:06', '测试');
 
 --
 -- 转储表的索引
@@ -56,7 +68,7 @@ ALTER TABLE `photo`
 -- 使用表AUTO_INCREMENT `photo`
 --
 ALTER TABLE `photo`
-  MODIFY `id` int(4) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

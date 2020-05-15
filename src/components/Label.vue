@@ -39,10 +39,10 @@
         <Page :total="totalCount" :current.sync="curPage" :page-size="pageSize"  show-total style="margin-top:24px" />
       </i-col>
     </Row> -->
-    <p>清醒时做事</p>
+    <!-- <p>清醒时做事</p>
     <p>糊涂时读书</p>
     <p>大怒时睡觉</p>
-    <p>独处时思考</p>
+    <p>独处时思考</p> -->
   </Row>
   <Modal
       v-model="modal"
@@ -125,7 +125,7 @@ export default{
     queryLabel () {
       var url = '/admin/Label_Query.php'
       axios.post(url).then(res => {
-        console.log(res.data)
+        // console.log(res.data)
         this.data = res.data.data
         this.username = res.data.username
         this.power = res.data.power
@@ -148,7 +148,7 @@ export default{
         }
         axios.post(url, qs.stringify(param))
           .then(res => {
-            console.log(res.data)
+            // console.log(res.data)
             if (res.data.code === 200 && res.data.message === 'OK') {
               this.$Message.success('添加成功')
             } else {
@@ -177,7 +177,7 @@ export default{
         }
         axios.post(url, qs.stringify(param))
           .then(res => {
-            console.log(res.data)
+            // console.log(res.data)
             if (res.data.code === 200 && res.data.message === 'OK') {
               this.$Message.success('修改成功')
               // this.queryLabel()
@@ -212,7 +212,7 @@ export default{
       var param = {'id': this.data[this.idx].id}
       axios.post(url, qs.stringify(param))
         .then(res => {
-          console.log(res.data)
+          // console.log(res.data)
           if (res.data.code === 200 && res.data.message === 'OK') {
             this.$Message.success('删除标签成功')
             this.queryLabel()

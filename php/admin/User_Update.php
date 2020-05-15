@@ -1,17 +1,14 @@
 <?php
-header("content-type:text/html;charset=utf-8");
-
-$id = $_POST["id"];
-$password = $_POST["password"];
-
-$conn = new mysqli("localhost", "root", "root123", "myblog");
-if($conn->connect_error) {
+$database = include "./database.php";
+if($database == 0) {
   $response = array(
     "code"=>500,
     "message"=>"连接失败"
   );
   print_r(json_encode($response));
 } else {
+  $id = $_POST["id"];
+  $password = $_POST["password"];
   $sql = "select * from user where id='{$id}'";
   $result = $conn->query($sql);
   $num = mysqli_num_rows($result);

@@ -1,16 +1,15 @@
 <?php
-header("content-type:text/html;charset=utf-8");
-session_start();
-$user = $_SESSION["username"];
-$user_power = $_SESSION["power"];
-$conn = new mysqli("localhost","root","root123","myblog");
-if($conn->connect_error){
+$database = include "./database.php";
+if($database == 0){
   $response = array(
     "code"=>500,
     "message"=>"连接失败"
   );
   print_r(json_encode($response));
 } else {
+  session_start();
+  $user = $_SESSION["username"];
+  $user_power = $_SESSION["power"];
   if(isset($_POST["page"])){
     $pageSize = $_POST("page");
   } else {

@@ -1,17 +1,15 @@
 <?php
-header("content-type:text/html;charset=utf-8");
-
-$label = $_POST["label"];
-$username = $_POST["username"];
-
-$conn = new mysqli("localhost","root", "root123","myblog");
-if($conn->connect_error){
+$database = include "./database.php";
+if($database == 0){
   $response = array(
     "code"=>500,
     "message"=>"连接失败"
   );
   print_r(json_encode($response));
 } else {
+  $label = $_POST["label"];
+  $username = $_POST["username"];
+  
   $sql = "select * from label where labelname='{$label}'";
   $result = $conn->query($sql);
   $num = mysqli_num_rows($result);

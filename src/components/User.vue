@@ -1,8 +1,13 @@
 <template>
   <Row>
     <Row>
-        <i-col span="24" style="text-align: left" v-if="power==0">
+        <i-col span="24" style="text-align: left;display: flex;justify-content: space-between;" v-if="power==0">
           <Button type="primary" @click="addUser" style="margin-bottom: 12px">添加</Button>
+          <Input search enter-button
+            v-model="keywords"
+            @on-search="query(curPage, pageSize)"
+            style="width:220px;"
+            placeholder="请输入用户名" />
         </i-col>
     </Row>
     <Row>
@@ -130,13 +135,14 @@ export default{
       // totalPages: 10,
       pageSize: 5,
       username: '',
-      power: ''
+      power: '',
+      keywords: ''
     }
   },
-  computed: {
-  },
-  created () {
-
+  watch: {
+    keywords () {
+      this.query(this.curPage, this.pageSize)
+    }
   },
   mounted () {
     this.query(this.curPage, this.pageSize)
@@ -146,7 +152,8 @@ export default{
       var url = '/admin/User_Query.php'
       var param = {
         'page': curPage,
-        'pageSize': pageSize
+        'pageSize': pageSize,
+        'keywords': this.keywords
       }
       axios.post(url, qs.stringify(param)).then(res => {
         // console.log(res.data)

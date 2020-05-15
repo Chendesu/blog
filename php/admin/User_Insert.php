@@ -1,18 +1,16 @@
 <?php
-header("content-type:text/html;charset=utf-8");
-
-$username = $_POST["username"];
-$password = $_POST["password"];
-$power = 1;
-
-$conn = new mysqli("localhost", "root", "root123", "myblog");
-if($conn->connect_error) {
+$database = include "./database.php";
+if($database == 0) {
   $response = array(
     "code"=>500,
     "message"=>"连接失败"
   );
   print_r(json_encode($response));
 } else {
+  $username = $_POST["username"];
+  $password = $_POST["password"];
+  $power = 1;
+
   $sql = "select * from user where username='{$username}'";
   $result = $conn->query($sql);
   $num = mysqli_num_rows($result);

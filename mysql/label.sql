@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主机： localhost
--- 生成日期： 2020-05-09 17:24:38
+-- 生成日期： 2020-05-15 16:26:48
 -- 服务器版本： 5.7.26
 -- PHP 版本： 7.3.4
 
@@ -43,7 +43,8 @@ INSERT INTO `label` (`id`, `labelname`, `username`) VALUES
 (2, 'idol', 'admin'),
 (3, 'test', 'admin'),
 (7, 'ceshi123', 'admin'),
-(6, 'ceshi', 'admin');
+(6, 'ceshi', 'admin'),
+(8, '测试', 'chen');
 
 --
 -- 转储表的索引
@@ -63,7 +64,7 @@ ALTER TABLE `label`
 -- 使用表AUTO_INCREMENT `label`
 --
 ALTER TABLE `label`
-  MODIFY `id` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

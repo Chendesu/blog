@@ -2,8 +2,13 @@
   <div>
     <Row v-show="status=='query'">
       <Row>
-        <i-col span="24" style="text-align: left">
+        <i-col span="24" style="text-align: left;display: flex;justify-content: space-between;">
           <Button type="primary" @click="addDiaryBtn" style="margin-bottom: 12px">添加</Button>
+          <Input search enter-button
+            v-model="keywords"
+            @on-search="query(curPage, pageSize)"
+            style="width:220px;"
+            placeholder="请输入文章标题" />
         </i-col>
       </Row>
       <Row>
@@ -65,7 +70,6 @@
                 </i-col>
             </FormItem>
             <FormItem label="内容：" prop="content">
-              <!-- <i-input v-model="formValidate.content" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder="Enter something..."></i-input> -->
                 <div id="editor">
                 </div>
             </FormItem>
@@ -97,16 +101,18 @@ import axios from 'axios'
 import qs from 'qs'
 import E from 'wangeditor'
 let editor = new E('#editor')
-let validateEditor = (rule, value, callback) => {
-  if (editor.txt.text() === '') {
-    return callback(new Error('文章内容不为空'))
-  } else {
-    callback()
-  }
-}
+editor.customConfig.uploadImgShowBase64 = true
+editor.customConfig.showLinkImg = false
 export default{
   name: 'Dairy',
   data () {
+    const validateEditor = (rule, value, callback) => {
+      if (editor.txt.text() === '') {
+        return callback(new Error('文章内容不为空'))
+      } else {
+        callback()
+      }
+    }
     return {
       header: '',
       columns: [
@@ -172,7 +178,13 @@ export default{
       pageSize: 5,
       status: 'query',
       username: '',
-      power: ''
+      power: '',
+      keywords: ''
+    }
+  },
+  watch: {
+    keywords () {
+      this.query(this.curPage, this.pageSize)
     }
   },
   mounted () {
@@ -185,10 +197,11 @@ export default{
       var url = '/admin/Diary_Query.php'
       var param = {
         'page': curPage,
-        'pageSize': pageSize
+        'pageSize': pageSize,
+        'keywords': this.keywords
       }
       axios.post(url, qs.stringify(param)).then(res => {
-        console.log(res.data)
+        // console.log(res.data)
         this.data = res.data.data
         this.totalCount = Number(res.data.total)
         this.username = res.data.username
@@ -202,6 +215,7 @@ export default{
         'label': this.formValidate.label,
         'content': editor.txt.html()
       }
+
       axios.post(url, qs.stringify(param))
         .then(res => {
           // console.log(res.data)
@@ -229,7 +243,7 @@ export default{
       // return
       axios.post(url, qs.stringify(param))
         .then(res => {
-          console.log(res.data)
+          // console.log(res.data)
           if (res.data.code === 200 && res.data.message === 'OK') {
             this.$Message.success('修改成功')
             this.query(this.curPage, this.pageSize)
@@ -262,12 +276,10 @@ export default{
       }
       this.$refs[name].validate((valid) => {
         if (valid) {
-          // this.$Message.success('Success!')
           if (this.status === 'add') {
             this.insert()
           }
           if (this.status === 'edit') {
-            // alert('编辑')
             this.update()
           }
         } else {
@@ -306,7 +318,7 @@ export default{
         }
         axios.post(url, qs.stringify(param))
           .then(res => {
-            console.log(res.data)
+            // console.log(res.data)
             if (res.data.code === 200 && res.data.message === 'OK') {
               this.$Message.success('添加成功')
               this.formValidate.label = this.newLabel
@@ -338,7 +350,7 @@ export default{
       var param = {'id': this.data[this.idx].id}
       axios.post(url, qs.stringify(param))
         .then(res => {
-          console.log(res.data)
+          // console.log(res.data)
           if (res.data.code === 200 && res.data.message === 'OK') {
             this.$Message.success('删除成功')
             this.query(this.curPage, this.pageSize)
