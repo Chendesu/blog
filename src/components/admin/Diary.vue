@@ -218,7 +218,7 @@ export default{
 
       axios.post(url, qs.stringify(param))
         .then(res => {
-          // console.log(res.data)
+          console.log(res.data)
           if (res.data.code === 200 && res.data.message === 'OK') {
             this.$Message.success('添加成功')
             this.query(this.curPage, this.pageSize)
@@ -239,8 +239,6 @@ export default{
         'label': this.formValidate.label,
         'content': editor.txt.html()
       }
-      // console.log(param)
-      // return
       axios.post(url, qs.stringify(param))
         .then(res => {
           // console.log(res.data)
@@ -359,6 +357,7 @@ export default{
           }
         })
     }
+
   }
 }
 </script>

@@ -17,7 +17,8 @@ if($database == 0) {
   $time = date("Y-m-d H:i:s");
   $read = 0;
 
-  $sql = "insert into diary (username, diarytitle, diarycontent, diarytime, diaryread, diarylabel) values ('$username','$title','$content','$time','$read','$label')";
+  $sql = "insert into diary (username, diarytitle, diarycontent, diarytime, diaryread, diarylabel) values ('{$username}','{$title}','{$content}','{$time}','{$read}','{$label}')";
+
   $result = $conn->query($sql);
   if($result) {
     $message = "OK";

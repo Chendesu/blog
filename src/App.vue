@@ -13,14 +13,20 @@ export default {
 </script>
 
 <style>
+.clearfix:after {
+  content:"\200B";
+  display:block;
+  height:0;
+  clear:both;
+}
+.clearfix { *zoom:1; }
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
+  /* font-family: 'Avenir', Helvetica, Arial, sans-serif; */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  /* text-align: center; */
   font-size: 14px;
   color: #2c3e50;
-  /* margin-top: 60px; */
   width: 100%;
   min-height: 100%;
 }
@@ -28,4 +34,9 @@ export default {
   margin-top: 24px;
   text-align: center;
 }
+.ivu-modal-mask,
+.ivu-modal-wrap {
+  z-index: 100000!important;
+}
+
 </style>

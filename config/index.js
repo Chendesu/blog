@@ -17,6 +17,13 @@ module.exports = {
         pathRewrite: {
           '^/php': '/php' //重写接口
         }
+      },
+      '/web': {
+        target: 'http://127.0.0.1',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/php': '/php'
+        }
       }
     },
 

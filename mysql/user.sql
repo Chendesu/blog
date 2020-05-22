@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主机： localhost
--- 生成日期： 2020-05-15 16:27:07
+-- 生成日期： 2020-05-22 17:20:08
 -- 服务器版本： 5.7.26
 -- PHP 版本： 7.3.4
 
@@ -52,7 +52,8 @@ INSERT INTO `user` (`id`, `username`, `password`, `power`) VALUES
 (11, 'dell', 'dell123', 1),
 (12, 'bag', 'bag123', 1),
 (13, 'Lily', 'Lily123', 1),
-(14, 'wind', 'wind123', 1);
+(14, 'wind', 'wind123', 1),
+(15, 'apple', 'apple123', 1);
 
 --
 -- 转储表的索引
@@ -72,7 +73,7 @@ ALTER TABLE `user`
 -- 使用表AUTO_INCREMENT `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

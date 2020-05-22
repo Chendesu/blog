@@ -1,11 +1,12 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Login from '@/components/Login'
-import home from '@/components/home'
-import User from '@/components/User'
-import Diary from '@/components/Diary'
-import Photo from '@/components/Photo'
-import Label from '@/components/Label'
+import Login from '@/components/admin/Login'
+import home from '@/components/admin/home'
+import User from '@/components/admin/User'
+import Diary from '@/components/admin/Diary'
+import Photo from '@/components/admin/Photo'
+import Label from '@/components/admin/Label'
+import Index from '@/components/Index'
 
 Vue.use(Router)
 
@@ -13,6 +14,14 @@ export default new Router({
   routes: [
     {
       path: '/',
+      name: 'Index',
+      component: Index,
+      meta: {
+        title: '首页'
+      }
+    },
+    {
+      path: '/Login',
       name: 'Login',
       component: Login,
       meta: {

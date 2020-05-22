@@ -9,6 +9,7 @@ if($database == 0){
 } else {
   $label = $_POST["label"];
   $username = $_POST["username"];
+  $icon = $_POST["icon"];
   
   $sql = "select * from label where labelname='{$label}'";
   $result = $conn->query($sql);
@@ -16,7 +17,7 @@ if($database == 0){
   if($num >= 1) {
     $message = "标签名已存在，添加失败";
   } else {
-    $sql_insert = "insert into label (labelname, username) values('{$label}','{$username}')";
+    $sql_insert = "insert into label (labelname, labelicon, username) values('{$label}','{$icon}','{$username}')";
     $result_insert = $conn->query($sql_insert);
     if($result_insert){
       $message = "OK";

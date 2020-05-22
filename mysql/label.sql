@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主机： localhost
--- 生成日期： 2020-05-15 16:26:48
+-- 生成日期： 2020-05-22 17:19:51
 -- 服务器版本： 5.7.26
 -- PHP 版本： 7.3.4
 
@@ -31,6 +31,7 @@ SET time_zone = "+00:00";
 CREATE TABLE `label` (
   `id` int(4) NOT NULL,
   `labelname` varchar(50) NOT NULL,
+  `labelicon` varchar(100) NOT NULL,
   `username` varchar(50) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
@@ -38,13 +39,14 @@ CREATE TABLE `label` (
 -- 转存表中的数据 `label`
 --
 
-INSERT INTO `label` (`id`, `labelname`, `username`) VALUES
-(1, '生活', 'admin'),
-(2, 'idol', 'admin'),
-(3, 'test', 'admin'),
-(7, 'ceshi123', 'admin'),
-(6, 'ceshi', 'admin'),
-(8, '测试', 'chen');
+INSERT INTO `label` (`id`, `labelname`, `labelicon`, `username`) VALUES
+(1, '生活', 'md-flame', 'admin'),
+(2, 'idol', 'ios-nutrition', 'admin'),
+(3, 'test', 'md-cafe', 'admin'),
+(7, 'ceshi123', 'md-bicycle', 'admin'),
+(6, 'ceshi', 'ios-beer', 'admin'),
+(8, '测试', 'logo-apple', 'chen'),
+(9, '水果', '', 'chen');
 
 --
 -- 转储表的索引
@@ -64,7 +66,7 @@ ALTER TABLE `label`
 -- 使用表AUTO_INCREMENT `label`
 --
 ALTER TABLE `label`
-  MODIFY `id` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

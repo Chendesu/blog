@@ -25,9 +25,13 @@ if($database == 0){
   $result = $conn->query($sql);
   $data = array();
   while($row=mysqli_fetch_array($result)){
+    if($row["labelicon"]==""){
+      $row["labelicon"] = "md-help";
+    }
     $array = array(
       "id"=>$row["id"],
       "label"=>$row["labelname"],
+      "icon"=>$row["labelicon"],
       "username"=>$row["username"]
     );
     array_push($data, $array);
