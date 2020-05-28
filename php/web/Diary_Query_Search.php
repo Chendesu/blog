@@ -17,41 +17,39 @@ if ($database == 0) {
   } else {
     $pageSize = 20;
   }
-  
-  if($_POST["labelKey"]!=""){
-    $labelKey = $_POST["labelKey"];
+  if ($_POST["keywords"] != "") {
+    $keywords = $_POST["keywords"];
   } else {
-    $labelKey = "%%";
+    $keywords = "%%";
   }
-  // $labelKey = "";
-  $sql = "select * from diary where diarylabel like binary '$labelKey' order by id desc limit ".($page-1)*$pageSize.", {$pageSize}";
+  $sql = "select * from diary where diarytitle like binary '%$keywords%' order by id desc limit " . ($page - 1) * $pageSize . ", {$pageSize}";
   $result = $conn->query($sql);
   $data = array();
-  while($row=mysqli_fetch_array($result)){
-    $str = mb_substr(strip_tags($row["diarycontent"]),0,100,"utf-8")."......";
+  while ($row = mysqli_fetch_array($result)) {
+    $str = mb_substr(strip_tags($row["diarycontent"]), 0, 100, "utf-8") . "......";
     $sql_icon = "select * from label where labelname='{$row["diarylabel"]}'";
     $result_icon = $conn->query($sql_icon);
     $num = mysqli_num_rows($result_icon);
-    if($num == 1) {
+    if ($num == 1) {
       $row_icon = mysqli_fetch_array($result_icon);
       $icon = $row_icon["labelicon"];
-      if($icon==""){
+      if ($icon == "") {
         $icon = "md-help";
       }
       $array = array(
-        "id"=>$row["id"],
-        "username"=>$row["username"],
+        "id" => $row["id"],
+        "username" => $row["username"],
         "title" => $row["diarytitle"],
         "content" => $str,
         "time" => $row["diarytime"],
         "read" => $row["diaryread"],
         "label" => $row["diarylabel"],
-        "icon"=> $icon
+        "icon" => $icon
       );
       array_push($data, $array);
     }
   }
-  $total_sql = "select count(*) from diary where diarylabel like binary '$labelKey'"; //总条数
+  $total_sql = "select count(*) from diary where diarytitle like binary '%$keywords%'"; //总条数
   $total_result = mysqli_fetch_array($conn->query($total_sql));
   $total = $total_result[0];
   $total_pages = ceil($total / $pageSize); //总页数
@@ -63,5 +61,4 @@ if ($database == 0) {
     "totalPages" => $total_pages
   );
   print_r(json_encode($response));
-
 }

@@ -418,5 +418,35 @@
     "id": 84,
     "name": "ios-water",
     "text": "ios-water"
+  },
+  {
+    "id": 85,
+    "name": "logo-vimeo",
+    "text": "logo-vimeo"
+  },
+  {
+    "id": 86,
+    "name": "logo-chrome",
+    "text": "logo-chrome"
+  },
+  {
+    "id": 87,
+    "name": "logo-css3",
+    "text": "logo-css3"
+  },
+  {
+    "id": 88,
+    "name": "logo-html5",
+    "text": "logo-html5"
+  },
+  {
+    "id": 89,
+    "name": "logo-javascript",
+    "text": "logo-javascript"
+  },
+  {
+    "id": 90,
+    "name": "logo-github",
+    "text": "logo-github"
   }
 ]

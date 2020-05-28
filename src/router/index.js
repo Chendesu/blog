@@ -7,6 +7,9 @@ import Diary from '@/components/admin/Diary'
 import Photo from '@/components/admin/Photo'
 import Label from '@/components/admin/Label'
 import Index from '@/components/Index'
+import DiaryWeb from '@/components/DiaryWeb'
+import PhotoWeb from '@/components/PhotoWeb'
+import DiaryWebDetail from '@/components/DiaryWebDetail'
 
 Vue.use(Router)
 
@@ -16,9 +19,27 @@ export default new Router({
       path: '/',
       name: 'Index',
       component: Index,
-      meta: {
-        title: '首页'
-      }
+      children: [
+        {
+          path: '/DiaryWeb',
+          name: 'DiaryWeb',
+          // redirect: '/DiaryWebDetail',
+          component: DiaryWeb
+        },
+        {
+          path: '/DiaryWebDetail',
+          name: 'DiaryWebDetail',
+          component: DiaryWebDetail
+        },
+        {
+          path: '/PhotoWeb',
+          name: 'PhotoWeb',
+          component: PhotoWeb,
+          meta: {
+            title: '相册'
+          }
+        }
+      ]
     },
     {
       path: '/Login',

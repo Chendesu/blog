@@ -2,7 +2,9 @@
     <div class="layout">
         <Layout>
             <Header :style="{position: 'fixed', width: '100%',boxShadow: '0 2px 2px #363e4f',zIndex: '10'}">
-                <div class="layout-logo"></div>
+                <div class="layout-logo">
+                  <img src="../../assets/logo.png" alt="">
+                </div>
                 <div class="demo-avatar">
                     <Avatar icon="ios-person" size="large" />
                     <div class="name">欢迎您，{{username}}</div>
@@ -34,7 +36,7 @@
                     <Content :style="{padding: '24px', minHeight: '280px', background: '#fff'}">
                         <router-view />
                     </Content>
-                    <Footer class="layout-footer-center">2011-2020 &copy; TalkingData</Footer>
+                    <Footer class="layout-footer-center">Copyright ©2019 ajiuya.cn All Rights Reserved. 闽ICP备19022956号</Footer>
                 </Layout>
             </Layout>
         </Layout>
@@ -89,16 +91,21 @@ export default {
     overflow: hidden;
 }
 .layout-logo{
-    width: 100px;
-    height: 30px;
-    background: #5b6270;
-    border-radius: 3px;
     float: left;
     position: relative;
-    top: 15px;
+    top: 50%;
     left: 20px;
+    width: 150px;
+    height: 50px;
+    text-align: center;
+    background: #fff;
+    border-radius: 3px;
+    transform: translateY(-50%);
 }
-
+.layout-logo img {
+  display: inline-block;
+  height: 100%;
+}
 .demo-avatar {
   float: right;
   display: flex;

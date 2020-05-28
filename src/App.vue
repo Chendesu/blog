@@ -38,5 +38,7 @@ export default {
 .ivu-modal-wrap {
   z-index: 100000!important;
 }
-
+.ivu-list-vertical .ivu-list-item-action {
+  text-align: right!important;
+}
 </style>

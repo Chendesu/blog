@@ -47,6 +47,35 @@
         }
         注：自定义校验是validator，不是validate/validateField/resetFields
 
+页面中的路由  
+  带参数跳转，当刷新整个页面时，路径由自页面路径'/DiaryWebList'变为父页面路径'/DiaryWeb'，内容不显示，解决方法是监测路由变化，如下
+    结构：<router-view :key="labelKey" />
+    js: this.$router.push({
+          path: '/DiaryWebList',
+          query: {
+            labelKey: this.labelKey
+          }
+        })
+    watch: {
+      $route (to, from) {
+        if (to.name === 'DiaryWeb') {
+          this.$router.push({
+            path: '/DiaryWebList',
+            query: {
+              labelKey: ''
+            }
+          })
+        } else {
+          this.$router.push({
+            path: '/DiaryWebList',
+            query: {
+              labelKey: this.labelKey
+            }
+          })
+        }
+      }
+    }
+  路由超过三级，一级路由跳到二级路由，二级路由再跳到三级路由能正常跳转，当三级路由要跳转是，路由失效。原因是就是多级菜单，多个共用组件导致的keepAlive缓存失效， keepAlive根本没考虑到页面缓存的复杂性
 
 
 

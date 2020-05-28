@@ -2,68 +2,16 @@
   <div class="bg" id="bg">
     <div class="hd">
       <div class="hd-inner">
-        <h2>这是一个随意的标题</h2>
+        <div class="logo">
+          <img src="../assets/logo.png" alt="">
+        </div>
+        <!-- <h2>这是一个随意的标题</h2> -->
       </div>
     </div>
     <div class="wrap clearfix">
       <div class="inner">
         <div class="main clearfix">
-          <List :class="['nav',{'fixed':scrollTop>115}]" id="nav">
-            <ListItem @click.native="clickFun('all')">
-              <a>
-                <Icon type="ios-keypad" size="24" />
-                <strong>全部</strong>
-              </a>
-            </ListItem>
-            <ListItem v-for="(item,index) in navList"
-            :key="item.id"
-            @click.native="clickFun(index)">
-              <a>
-                <Icon :type="item.icon" size="24" />
-                <strong>{{item.label}}</strong>
-              </a>
-            </ListItem>
-          </List>
-          <div class="content">
-            <Card>
-              <div slot="title">
-                <Icon type="ios-pin" size="24" />
-                当前位置：
-                <span>日志</span>
-                <Icon type="md-arrow-forward" />
-                <span v-if="labelKey!=''">{{labelKey}}</span>
-                <span v-else>全部</span>
-              </div>
-              <List v-show="diaryList.length>0" item-layout="vertical">
-                <ListItem v-for="item in diaryList" :key="item.id">
-                  <ListItemMeta
-                  :title="item.title"
-                  :description="item.content">
-                      <Icon slot="avatar" :type="item.icon" size="30" />
-                  </ListItemMeta>
-                  <template slot="action" style="text-align:right;">
-                    <li>
-                        <Icon type="md-eye" />{{item.read}}
-                    </li>
-                    <li>
-                        <Icon type="md-person" />{{item.username}}
-                    </li>
-                    <li>
-                        查看
-                    </li>
-                  </template>
-                </ListItem>
-              </List>
-
-              <div class="null" v-show="diaryList.length==0">
-                <Icon type="ios-information-circle" size="24" />
-                <p>暂无文章</p>
-              </div>
-
-              <Page :total="totalCount" :current.sync="curPage" :page-size="pageSize"  show-total @on-change="page" style="margin-top:24px" />
-            </Card>
-
-          </div>
+          <router-view />
         </div>
         <div class="left">
           <Card class="info">
@@ -76,13 +24,13 @@
             <div class="info-nav">
               <div class="name">呆桃</div>
               <ul class="list">
-                <li>
+                <li @click="$goRoute('/DiaryWeb')">
                   <strong>日志</strong>
-                  <span>0</span>
+                  <span>{{diaryTotal}}</span>
                 </li>
-                <li>
+                <li @click="$goRoute('/PhotoWeb')">
                   <strong>相册</strong>
-                  <span>0</span>
+                  <span>{{photoTotal}}</span>
                 </li>
               </ul>
             </div>
@@ -118,81 +66,34 @@ export default {
   name: 'Index',
   data () {
     return {
-      navList: [],
-      diaryList: [],
-      curPage: 1,
-      totalCount: 0,
-      pageSize: 10,
-      labelKey: '',
-      scrollTop: 0,
-      navHeight: 0,
       dateObj: '',
       date: '',
       week: '',
-      time: ''
+      time: '',
+      diaryTotal: 0,
+      photoTotal: 0
     }
   },
+  created () {
+    var url = '/web/Diary_Query.php'
+    axios.post(url).then(res => {
+      // console.log(res.data)
+      this.diaryTotal = res.data.total
+    })
+    var urlphoto = 'web/Photo_Query.php'
+    axios.post(urlphoto).then(res => {
+      // console.log(res.data)
+      this.photoTotal = res.data.total
+    })
+  },
   mounted () {
+    this.$router.push({path: '/DiaryWeb'})
     setInterval(() => {
       this.getDate()
       this.getTime()
     }, 10)
-    var nav = document.getElementById('nav')
-    var url = '/admin/Label_Query.php'
-    axios.post(url).then(res => {
-      // console.log(res.data)
-      if (res.data.code === 200 && res.data.message === 'OK') {
-        this.navList = res.data.data
-        // console.log(nav.offsetHeight)
-      }
-    })
-    this.queryDiary(this.curPage, this.pageSize, this.labelKey)
-
-    window.addEventListener('scroll', this.handleScroll, true)
   },
   methods: {
-    queryDiary (curPage, pageSize, labelKey) {
-      var url = '/web/Diary_Query.php'
-      var param = {
-        'page': curPage,
-        'pageSize': pageSize,
-        'labelKey': labelKey
-      }
-      axios.post(url, qs.stringify(param)).then(res => {
-        // console.log(res.data)
-        if (res.data.code === 200 && res.data.message === 'OK') {
-          this.diaryList = res.data.data
-          this.totalCount = Number(res.data.total)
-        } else {
-          this.$Message.error('Fail')
-        }
-      })
-    },
-    clickFun (index) {
-      this.curPage = 1
-      if (index === 'all') {
-        this.labelKey = ''
-      } else {
-        this.labelKey = this.navList[index].label
-      }
-      this.queryDiary(this.curPage, this.pageSize, this.labelKey)
-    },
-    page (index) {
-      this.queryDiary(this.curPage, this.pageSize, this.labelKey)
-    },
-    // 保存滚动值，这是兼容的写法
-    handleScroll () {
-      // this.scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
-      var bg = document.getElementById('bg')
-      this.scrollTop = bg.scrollTop
-      // console.log(this.scrollTop)
-    },
-    // 滚动条回到顶部
-    backTop () {
-      if (this.scrollTop > 10) {
-        document.documentElement.scrollTop = 0
-      }
-    },
     getDate () {
       this.dateObj = new Date()
       var year = this.dateObj.getFullYear()
@@ -246,7 +147,9 @@ export default {
   left: 0;
   right: 0;
   bottom: 0;
-  background: #17233d;
+  /* background: #17233d; */
+  background: url(../assets/photo.jpg) 0 0;
+  background-size:auto 100%;
   overflow: auto;
 }
 .hd {
@@ -262,11 +165,27 @@ export default {
 }
 .hd .hd-inner {
   width: 1010px;
+  height: 100px;
   margin: 0 auto;
   line-height: 100px;
   font-size: 18px;
   color: #17233d;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   text-align: center;
+}
+.hd .hd-inner .logo {
+  /* width: 150px; */
+  height: 100px;
+  border: 1px solid #000;
+  border-radius: 50%;
+  /* background-color: #fff; */
+  text-align: center;
+}
+.hd .hd-inner .logo img {
+  display: inline-block;
+  height: 100%;
 }
 .wrap {
   overflow: hidden;
@@ -370,7 +289,7 @@ export default {
   position: absolute;
   left: 50%;
   top: 0;
-  width: 0.5px;
+  width: 1px;
   height: 100%;
   background: #d9d9d9;
   transform: translateX(-50%);
@@ -396,52 +315,6 @@ export default {
   margin-right: 10px;
   min-height: 500px;
   /* background: #808695; */
-}
-.wrap .main .nav {
-  float: left;
-  width: 150px;
-  /* min-height: 200px; */
-  /* background: #e8eaec; */
-}
-.wrap .main .nav.fixed {
-  position: fixed;
-  top: 0;
-}
-.wrap .main .nav li {
-  border-bottom: 1px solid rgba(255,255,255,0);
-}
-.wrap .main .nav a {
-  display: block;
-  font-size: 14px;
-  color: #17233d;
-  width: 100%;
-  height: 100%;
-  padding-left: 15px;
-  box-sizing: border-box;
-}
-.wrap .main .nav li:hover {
-  /* color: #17233d; */
-  background: rgba(255,255,255,0.2);
-}
-.wrap .main .nav a strong {
-  font-weight: normal;
-}
-.wrap .main .content {
-  float: right;
-  width: 610px;
-  /* min-height: 600px; */
-  /* padding: 15px 27px;
-  background: #fff; */
-}
-.null {
-  width: 100%;
-  height: 300px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.wrap .main .content .ivu-list-item-action {
-  text-align: right!important;
 }
 .ft {
   width: 100%;

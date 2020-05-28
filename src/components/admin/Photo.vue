@@ -59,10 +59,10 @@
       </h2>
       <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="80">
         <FormItem label="标题" prop="title">
-            <i-input v-model="formValidate.title" placeholder="请输入文章标题"></i-input>
+            <i-input v-model="formValidate.title" maxlength="30" placeholder="请输入图片标题，最多30个字"></i-input>
         </FormItem>
         <FormItem label="简介" prop="content">
-          <i-input v-model="formValidate.content" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder="请输入简介"></i-input>
+          <i-input v-model="formValidate.content" maxlength="500" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder="请输入简介，最多500个字"></i-input>
         </FormItem>
         <FormItem label="标签" prop="label">
           <RadioGroup v-model="formValidate.label" @on-change="labelFun">

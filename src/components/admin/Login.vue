@@ -103,5 +103,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+  background: url(../../assets/photo.jpg) 0 0;
+  background-size: auto 100%;
 }
 </style>
