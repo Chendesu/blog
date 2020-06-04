@@ -54,7 +54,7 @@
         <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="80">
             <FormItem label="标题：" prop="title">
                 <!-- <i-input v-model="formValidate.title" placeholder="请输入文章标题"></i-input> -->
-                <i-input v-model="formValidate.title" maxlength="30" placeholder="请输入文章标题,最多30个字"  />
+                <i-input v-model="formValidate.title" placeholder="请输入文章标题,最多30个字"  />
             </FormItem>
             <FormItem label="标签：" prop="label">
                 <RadioGroup v-model="formValidate.label" @on-change="labelFun">
@@ -216,6 +216,7 @@ export default{
         'label': this.formValidate.label,
         'content': editor.txt.html()
       }
+      console.log(editor.txt.html())
 
       axios.post(url, qs.stringify(param))
         .then(res => {
@@ -228,7 +229,7 @@ export default{
             this.formValidate.label = ''
             editor.txt.html('')
           } else {
-            this.$Message.error(res.data.message)
+            this.$Message.error('为什么失败')
           }
         })
     },

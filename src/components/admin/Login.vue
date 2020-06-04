@@ -1,5 +1,6 @@
 <template>
   <div class="login">
+    <div class="login-bg"></div>
     <Card style="width:350px">
       <Form ref="formInline" :model="formInline" :rules="ruleInline">
             <FormItem prop="user">
@@ -16,6 +17,7 @@
                 <Button type="success" long @click="handleSubmit('formInline')">登录</Button>
             </FormItem>
         </Form>
+        <a @click="$goRoute('/')">返回首页</a>
       </Card>
   </div>
 </template>
@@ -103,7 +105,19 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: url(../../assets/photo.jpg) 0 0;
+  /* background: #17233d; */
+  background: url(../../assets/bg.jpg) 0 0;
   background-size: auto 100%;
+}
+.login-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #000;
+  opacity: 0.7;
 }
 </style>

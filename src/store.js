@@ -6,7 +6,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: sessionStorage.getItem('state') ? JSON.parse(sessionStorage.getItem('state')) : {
     username: '',
-    power: ''
+    power: '',
+    isShow: false
   },
   mutations: {
     saveusername (state, username) {
@@ -15,6 +16,9 @@ export default new Vuex.Store({
     },
     savepower (state, power) {
       state.power = power
+    },
+    saveisShow (state, isShow) {
+      state.isShow = isShow
     }
   },
   actions: {
@@ -23,6 +27,9 @@ export default new Vuex.Store({
     },
     savepower (context) {
       context.commit('savepower')
+    },
+    saveisShow (context) {
+      context.commit('saveisShow')
     }
   }
 })

@@ -10,20 +10,17 @@ import iView from 'iview'
 // import ViewUI from 'view-design'
 import 'view-design/dist/styles/iview.css'
 
+import preview from 'vue-photo-preview'
+import 'vue-photo-preview/dist/skin.css'
+Vue.use(preview)
 // import VueWechatTitle from 'vue-wechat-title'
 
-// router.beforeEach((to, from, next) => {
-//   if (to.meta.title) {
-//     document.title = to.meta.title
-//   }
-//   if (to.path === '/Login') {
-//     next()
-//   } else if (to.path === '/') {
-//     next()
-//   } else {
-//     next({path: '/'})
-//   }
-// })
+router.beforeEach((to, from, next) => {
+  if (to.meta.title) {
+    document.title = to.meta.title
+  }
+  next()
+})
 
 // router.beforeEach((to, from, next) => {
 //   if (to.matched.length === 0) { // 如果未匹配到路由
@@ -58,6 +55,17 @@ const routerPush = VueRouter.prototype.push
 VueRouter.prototype.push = function push (location) {
   return routerPush.call(this, location).catch(error => error)
 }
+
+// 定义一个请求拦截器
+axios.interceptors.request.use(function (config) {
+  store.state.isShow = true // 在请求发出之前进行一些操作
+  return config
+})
+// 定义一个响应拦截器
+axios.interceptors.response.use(function (config) {
+  store.state.isShow = false// 在这里对返回的数据进行处理
+  return config
+})
 
 /* eslint-disable no-new */
 new Vue({

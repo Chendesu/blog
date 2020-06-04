@@ -10,6 +10,7 @@ import Index from '@/components/Index'
 import DiaryWeb from '@/components/DiaryWeb'
 import PhotoWeb from '@/components/PhotoWeb'
 import DiaryWebDetail from '@/components/DiaryWebDetail'
+import Error from '@/components/error'
 
 Vue.use(Router)
 
@@ -19,6 +20,9 @@ export default new Router({
       path: '/',
       name: 'Index',
       component: Index,
+      meta: {
+        title: '阿久的个人博客'
+      },
       children: [
         {
           path: '/DiaryWeb',
@@ -87,6 +91,10 @@ export default new Router({
           }
         }
       ]
+    },
+    {
+      path: '*',
+      component: Error
     }
 
   ]

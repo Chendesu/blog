@@ -3,7 +3,6 @@
     <Card>
       <h2 slot="title" class="title">{{title}}</h2>
       <span slot="extra" class="extra" @click="$goRoute('/DiaryWeb')" >
-        返回日志列表
         <Icon type="md-menu" size="24" />
       </span>
       <div class="hd">
@@ -52,7 +51,7 @@ export default {
       id: this.$route.params.id
     }
     axios.post(url, qs.stringify(param)).then(res => {
-      console.log(res.data)
+      // console.log(res.data)
       var response = res.data
       if (response.code === 200 && response.message === 'OK') {
         this.title = response.data.title
