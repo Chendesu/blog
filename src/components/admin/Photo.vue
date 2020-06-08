@@ -13,8 +13,13 @@
             placeholder="请输入相册标题" />
       </i-col>
     </Row>
-    <Row>
-      <i-col>
+    <div class="loading" v-if="isShow">
+      <Spin>
+        <Icon type="ios-loading" size="24" color="#17233d" class="demo-spin-icon-load" />
+      </Spin>
+    </div>
+    <Row v-else>
+      <i-col span="24">
         <Table border :columns="columns" :data="data">
           <template slot-scope="{row,index}" slot="url">
             <Button type="success" @click="previewImg(index)">预览</Button>
@@ -44,8 +49,6 @@
             </template>
         </Table>
       </i-col>
-    </Row>
-    <Row>
       <i-col span="24">
         <Page :total="totalCount" :current.sync="curPage" :page-size="pageSize"  show-total @on-change="page" style="margin-top:24px" />
       </i-col>
@@ -174,7 +177,8 @@ export default{
         label: '',
         newLabel: '',
         username: '',
-        time: ''
+        time: '',
+        isShow: true
       },
       ruleValidate: {
         title: [
@@ -197,7 +201,8 @@ export default{
       idx: '',
       previewUrl: '',
       modalImg: false,
-      keywords: ''
+      keywords: '',
+      isShow: true
     }
   },
   watch: {
@@ -217,16 +222,19 @@ export default{
         'pageSize': pageSize,
         'keywords': this.keywords
       }
-      axios.post(url, qs.stringify(param))
-        .then(res => {
-          // console.log(res.data)
-          if (res.data.code === 200 && res.data.message === 'OK') {
-            this.data = res.data.data
-            this.totalCount = Number(res.data.total)
-            this.username = res.data.username
-            this.power = res.data.power
-          }
-        })
+      axios.post(url, qs.stringify(param)).then(res => {
+        // console.log(res.data)
+        if (res.data.code === 200 && res.data.message === 'OK') {
+          this.data = res.data.data
+          this.totalCount = Number(res.data.total)
+          this.username = res.data.username
+          this.power = res.data.power
+        }
+      }).finally(() => {
+        setTimeout(() => {
+          this.isShow = false
+        }, 200)
+      })
     },
     insert () {
       var url = '/admin/Photo_Insert.php'

@@ -41,9 +41,18 @@ export default {
 .ivu-list-vertical .ivu-list-item-action {
   text-align: right!important;
 }
+.content img {
+  max-width: 100%;
+}
+.content pre {
+  background: #eee;
+  width: 100%;
+  overflow: auto;
+}
 .loading {
   width: 100%;
   height: 300px;
+  background-color: #fff;
   display: flex;
   justify-content: center;
   align-items: center;

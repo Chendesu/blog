@@ -12,7 +12,7 @@ if($database == 0) {
 
   $username = $_SESSION["username"];
   $title = $_POST["title"];
-  $content = $_POST["content"];
+  $content = addslashes($_POST["content"]);
   $label = $_POST["label"];
   $time = date("Y-m-d H:i:s");
   $read = 0;

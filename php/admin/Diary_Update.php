@@ -9,7 +9,7 @@ if($database == 0){
 } else {
   $id = $_POST["id"];
   $title = $_POST["title"];
-  $content = $_POST["content"];
+  $content = addslashes($_POST["content"]);
   $label = $_POST["label"];
 
   $sql = "select * from diary where id = '{$id}'";

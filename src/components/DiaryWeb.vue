@@ -2,7 +2,9 @@
 <div>
   <div class="main" v-show="mobile==false">
     <List :class="['nav',{'fixed':scrollTop>115}]" id="nav">
-      <ListItem @click.native="clickFun('all')">
+      <ListItem
+        :class="{'sel':idx==='all'}"
+        @click.native="clickFun('all')">
         <a>
           <Icon type="ios-keypad" size="24" />
           <strong>全部</strong>
@@ -10,6 +12,7 @@
       </ListItem>
       <ListItem v-for="(item,index) in navList"
       :key="item.id"
+      :class="{'sel':index===idx}"
       @click.native="clickFun(index)">
         <a>
           <Icon :type="item.icon" size="24" />
@@ -127,10 +130,16 @@
             <ListItem v-for="(item) in diaryList" :key="item.id">
               <ListItemMeta
               :title="item.title"
-              :description="item.content"
               @click.native="goDetail(item.id)"
               style="cursor:pointer;">
                   <Icon slot="avatar" :type="item.icon" size="30" />
+                  <div slot="description">
+                    {{item.content}}
+                    <span style="color: #17233d;display:flex;justify-content:flex-end;"  @click="goDetail(item.id)">
+                      查看全文
+                      <Icon type="ios-arrow-round-forward" size="18" color="#17233d" />
+                    </span>
+                  </div>
               </ListItemMeta>
               <template slot="action" style="text-align:right;">
                 <li>
@@ -140,9 +149,9 @@
                     <Icon type="md-person" />{{item.username}}
                 </li>
                 <li><Icon type="md-pricetag" />{{item.label}}</li>
-                <li @click="goDetail(item.id)">
+                <!-- <li @click="goDetail(item.id)">
                     查看全文
-                </li>
+                </li> -->
               </template>
             </ListItem>
           </List>
@@ -172,6 +181,7 @@ export default {
       labelKey: '',
       scrollTop: 0,
       keywords: '',
+      idx: 'all',
       mobile: false,
       mobileIdx: 'all',
       isShow: true
@@ -199,6 +209,7 @@ export default {
     clickFun (index) {
       this.isShow = true
       this.curPage = 1
+      this.idx = index
       if (index === 'all') {
         this.labelKey = ''
       } else {
@@ -246,11 +257,14 @@ export default {
       this.queryDiary(this.curPage, this.pageSize, this.labelKey)
     },
     goDetail (id) {
+      // this.$router.push({
+      //   name: 'DiaryWebDetail',
+      //   params: {
+      //     id: id
+      //   }
+      // })
       this.$router.push({
-        name: 'DiaryWebDetail',
-        params: {
-          id: id
-        }
+        path: `DiaryWebDetail?id=${id}`
       })
     },
     // 保存滚动值，这是兼容的写法
@@ -299,6 +313,7 @@ export default {
 .wrap .main .nav li {
   border-bottom: 1px solid rgba(255,255,255,0);
 }
+
 .wrap .main .nav a {
   display: block;
   font-size: 14px;
@@ -308,11 +323,13 @@ export default {
   padding-left: 15px;
   box-sizing: border-box;
 }
-.wrap .main .nav li:hover {
+.wrap .main .nav li:hover,
+.wrap .main .nav li.sel {
   /* background: rgba(255,255,255,0.2); */
   background: rgba(232, 234, 236, 0.7);
 }
-.wrap .main .nav li:hover a {
+.wrap .main .nav li:hover a,
+.wrap .main .nav li.sel a {
   color: #17233d;
 }
 .wrap .main .nav a strong {
@@ -379,5 +396,13 @@ export default {
 .mobile-diary {
   margin: 0 5px;
   margin-top: 50px;
+}
+.ivu-list-item-action {
+  display: flex;
+  align-items: center;
+}
+.ivu-list-item-action>li {
+  /* font-size: 12px; */
+  white-space: nowrap;
 }
 </style>

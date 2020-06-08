@@ -11,7 +11,12 @@
             placeholder="请输入文章标题" />
         </i-col>
       </Row>
-      <Row>
+      <div class="loading" v-if="isShow">
+        <Spin>
+          <Icon type="ios-loading" size="24" color="#17233d" class="demo-spin-icon-load" />
+        </Spin>
+      </div>
+      <Row v-else>
         <i-col span="24">
           <Table border :columns="columns" :data="data">
             <template slot-scope="{ row, index }" slot="action">
@@ -38,8 +43,6 @@
             </template>
           </Table>
         </i-col>
-      </Row>
-      <Row>
         <i-col span="24">
           <Page :total="totalCount" :current.sync="curPage" :page-size="pageSize"  show-total @on-change="page" style="margin-top:24px" />
         </i-col>
@@ -54,7 +57,7 @@
         <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="80">
             <FormItem label="标题：" prop="title">
                 <!-- <i-input v-model="formValidate.title" placeholder="请输入文章标题"></i-input> -->
-                <i-input v-model="formValidate.title" placeholder="请输入文章标题,最多30个字"  />
+                <i-input v-model="formValidate.title" maxlength="30" placeholder="请输入文章标题,最多30个字"  />
             </FormItem>
             <FormItem label="标签：" prop="label">
                 <RadioGroup v-model="formValidate.label" @on-change="labelFun">
@@ -180,7 +183,8 @@ export default{
       status: 'query',
       username: '',
       power: '',
-      keywords: ''
+      keywords: '',
+      isShow: true
     }
   },
   watch: {
@@ -207,6 +211,8 @@ export default{
         this.totalCount = Number(res.data.total)
         this.username = res.data.username
         this.power = res.data.power
+      }).finally(() => {
+        this.isShow = false
       })
     },
     insert () {

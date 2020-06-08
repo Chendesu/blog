@@ -1,6 +1,5 @@
 <template>
   <div>
-    <!-- <Spin size="large" fix v-if="this.$store.state.isShow"></Spin> -->
     <div class="bg" id="bg" v-show="mobile==false">
       <div class="hd">
         <div class="hd-inner">
@@ -21,7 +20,7 @@
                 <div class="headpic">
                   <img src="../assets/headpic.jpg" alt="">
                 </div>
-                <a class="admin"  @click="$goRoute('/Login')"></a>
+                <a class="admin" @click="$goRoute('/Login')"></a>
               </div>
               <div class="info-nav">
                 <div class="name">阿久</div>
@@ -62,13 +61,13 @@
     </div>
     <div class="mobile-bg" v-show="mobile==true">
       <!-- <div class="mobile-bg-hd"> -->
-        <div class="mobile-bg-btn" @touchstart="openInfo(1)">
+        <div class="mobile-bg-btn" @touchstart="openInfo(1)" @click="openInfo(1)">
           <img src="../assets/logo.png" alt="">
         </div>
       <!-- </div> -->
 
       <div class="mobile-bg-info" v-show="mobileInfo==true">
-        <div class="mobile-bg-info-close"  @touchstart="openInfo(0)">
+        <div class="mobile-bg-info-close"  @touchstart="openInfo(0)" @click="openInfo(0)">
           <Icon type="md-close" size="24" />
         </div>
         <Card class="info">

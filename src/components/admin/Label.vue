@@ -6,7 +6,12 @@
         <Button type="primary" @click="addBtn" style="margin-bottom: 12px">添加</Button>
       </i-col>
     </Row>
-    <Row>
+    <div class="loading" v-if="isShow">
+      <Spin>
+        <Icon type="ios-loading" size="24" color="#17233d" class="demo-spin-icon-load" />
+      </Spin>
+    </div>
+    <Row v-else>
       <i-col span="24">
         <Table border :columns="columns" :data="data">
           <template slot-scope="{ row, index }" slot="icon">
@@ -161,7 +166,8 @@ export default{
       loading: true,
       formStatus: 'query',
       idx: '',
-      icons: []
+      icons: [],
+      isShow: true
     }
   },
   mounted () {
@@ -179,6 +185,10 @@ export default{
         this.data = res.data.data
         this.username = res.data.username
         this.power = res.data.power
+      }).finally(() => {
+        setTimeout(() => {
+          this.isShow = false
+        }, 200)
       })
     },
     insertLabel () {

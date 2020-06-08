@@ -13,16 +13,19 @@ if ($database == 0) {
   $num = mysqli_num_rows($result);
   if($num==1){
     $row = mysqli_fetch_array($result);
-    $message = "OK";
+    $read = $row["diaryread"]+1;
+    $sql_update = "update diary set diaryread={$read} where id={$id}";
+    $conn->query($sql_update);
     $data = array(
       "id"=>$row["id"],
       "username"=>$row["username"],
       "title"=>$row["diarytitle"],
       "content"=>$row["diarycontent"],
       "time"=>$row["diarytime"],
-      "read"=>$row["diaryread"],
+      "read"=>$read,
       "label"=>$row["diarylabel"]
     );
+    $message = "OK";
   } else {
     $message = "文章不存在";
   }

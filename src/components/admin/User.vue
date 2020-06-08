@@ -10,13 +10,19 @@
             placeholder="请输入用户名" />
         </i-col>
     </Row>
-    <Row>
-      <i-col span="24">
-        <Table border :columns="columns" :data="data">
-          <template slot-scope="{ row, index }" slot="power">
-            <span v-if="data[index].power==0">默认管理员</span>
-            <span v-else>普通管理员</span>
-          </template>
+    <div class="loading" v-if="isShow">
+      <Spin>
+        <Icon type="ios-loading" size="24" color="#17233d" class="demo-spin-icon-load" />
+      </Spin>
+    </div>
+    <div v-else>
+      <Row>
+        <i-col span="24">
+          <Table border :columns="columns" :data="data">
+            <template slot-scope="{ row, index }" slot="power">
+              <span v-if="data[index].power==0">默认管理员</span>
+              <span v-else>普通管理员</span>
+            </template>
             <template slot-scope="{ row, index }" slot="action">
                 <Button
                   type="primary"
@@ -40,14 +46,15 @@
                   <Icon type="ios-trash-outline" size="18" />
                 </Button>
             </template>
-        </Table>
-      </i-col>
-    </Row>
-    <Row>
-      <i-col span="24">
-        <Page :total="totalCount" :current.sync="curPage" :page-size="pageSize"  show-total @on-change="page"/>
-      </i-col>
-    </Row>
+          </Table>
+        </i-col>
+      </Row>
+      <Row>
+        <i-col span="24">
+          <Page :total="totalCount" :current.sync="curPage" :page-size="pageSize"  show-total @on-change="page"/>
+        </i-col>
+      </Row>
+    </div>
 
     <Modal
         v-model="modal"
@@ -136,7 +143,8 @@ export default{
       pageSize: 5,
       username: '',
       power: '',
-      keywords: ''
+      keywords: '',
+      isShow: true
     }
   },
   watch: {
@@ -161,6 +169,10 @@ export default{
         this.totalCount = Number(res.data.total)
         this.username = res.data.username
         this.power = res.data.power
+      }).finally(() => {
+        setTimeout(() => {
+          this.isShow = false
+        }, 200)
       })
     },
     // 添加新用户
