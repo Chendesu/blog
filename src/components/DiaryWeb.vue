@@ -19,6 +19,15 @@
           <strong>{{item.label}}</strong>
         </a>
       </ListItem>
+      <ListItem
+        :class="{'sel':idx==='my'}"
+        @click.native="clickFun('my')">
+        <a>
+          <!-- <Icon type="ios-keypad" size="24" /> -->
+          <Icon type="ios-bowtie" size="24" />
+          <strong>关于我</strong>
+        </a>
+      </ListItem>
     </List>
     <div class="content">
       <Card>
@@ -210,8 +219,11 @@ export default {
       this.isShow = true
       this.curPage = 1
       this.idx = index
+
       if (index === 'all') {
         this.labelKey = ''
+      } else if (index === 'my') {
+        this.$router.push({path: ''})
       } else {
         this.labelKey = this.navList[index].label
       }

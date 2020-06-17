@@ -40,7 +40,8 @@ if ($database == 0){
   if ($err !== null) {
     $message = "图片上传失败";
   } else {
-    $url = 'qa75ul3w1.bkt.clouddn.com/' . $filename;
+    // $url = 'qa75ul3w1.bkt.clouddn.com/' . $filename;
+    $url = 'http://qiniu.ajiuya.cn/'. $filename;
     $sql = "insert into photo (username,phototitle,photourl,photocontent,phototime,photolabel) values ('$username','$title','$url','$content','$time','$label')";
     $result = $conn->query($sql);
     if($result){

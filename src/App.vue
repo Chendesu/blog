@@ -30,6 +30,10 @@ export default {
   width: 100%;
   min-height: 100%;
 }
+* {
+  /* word-break: break-all; */
+  word-break: break-word;
+}
 .ivu-page {
   margin-top: 24px;
   text-align: center;
@@ -43,11 +47,31 @@ export default {
 }
 .content img {
   max-width: 100%;
+  border-radius: 3px;
+  box-shadow: 0 0 2px #999;
 }
 .content pre {
-  background: #eee;
   width: 100%;
+  padding: 15px;
+  border-radius: 5px;
+  background: #eee;
   overflow: auto;
+}
+.content table {
+  border: 2px solid #333;
+  border-right: 1px solid #333;
+  border-bottom: 1px solid #333;
+  border-radius: 5px;
+  box-shadow: 2px 2px 2px #999;
+  overflow: hidden;
+}
+.content table th,.content table td {
+  border-bottom: 1px solid #333;
+  border-right: 1px solid #333;
+}
+.content table tr th:last-child,
+.content table tr td:last-child {
+  border-right: 0;
 }
 .loading {
   width: 100%;

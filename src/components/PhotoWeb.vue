@@ -12,7 +12,7 @@
           </Spin>
         </div>
         <div v-else>
-          <div class="list-null" v-if="photoList.length===0">
+          <div class="list-null" v-if="total===0">
             <Icon type="ios-information-circle" size="34" />
             <p>暂无图片</p>
           </div>
@@ -28,7 +28,7 @@
                   :key="i"
                   @click="photoFun(it)">
                   <div class="img">
-                    <img :src="'http://'+it.url" alt="">
+                    <img :src="it.url" alt="">
                   </div>
                 </li>
               </ul>
@@ -44,7 +44,7 @@
         </div>
         <div class="carousel-main">
           <a :class="['img', {'img-scale':isScale===true}]">
-            <img :src="'http://'+photo.url" alt="">
+            <img :src="photo.url" alt="">
           </a>
           <div class="carousel-main-ft">
             <a
@@ -54,7 +54,7 @@
               <!-- <Icon type="ios-expand" size="24" /> -->
               <Icon type="md-resize" size="24" />
             </a>
-            <a title="查看原图" class="carousel-main-ft-btn origin" :href="'http://'+photo.url" target="_blank">
+            <a title="查看原图" class="carousel-main-ft-btn origin" :href="photo.url" target="_blank">
               <Icon type="md-expand" size="24" />
             </a>
           </div>
@@ -106,7 +106,7 @@
             <li v-for="(item,index) in mobileList" :key="index">
               <div class="img-box">
                 <div class="img">
-                  <img :src="'http://'+item.url" preview :preview-text="item.title" />
+                  <img :src="item.url" preview :preview-text="item.title" />
                 </div>
               </div>
               <div class="img-info">
@@ -144,6 +144,7 @@ export default {
   name: 'PhotoWeb',
   data () {
     return {
+      total: 0,
       navList: [],
       scrollTop: 0,
       photoList: [],
@@ -163,6 +164,7 @@ export default {
     }
   },
   mounted () {
+    this.queryPhoto('')
     var url = '/admin/Label_Query.php'
     axios.post(url).then(res => {
       // console.log(res.data)
@@ -197,8 +199,10 @@ export default {
         'labelKey': labelKey
       }
       axios.post(url, qs.stringify(param)).then(res => {
-        console.log(res.data)
+        // console.log(res.data)
         this.mobileList = res.data.data
+        this.total = res.data.data.length
+        // console.log(this.total)
       }).finally(() => {
         setTimeout(() => {
           this.isShow = false

@@ -57,7 +57,7 @@
         <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="80">
             <FormItem label="标题：" prop="title">
                 <!-- <i-input v-model="formValidate.title" placeholder="请输入文章标题"></i-input> -->
-                <i-input v-model="formValidate.title" maxlength="30" placeholder="请输入文章标题,最多30个字"  />
+                <i-input v-model="formValidate.title" placeholder="请输入文章标题"  />
             </FormItem>
             <FormItem label="标签：" prop="label">
                 <RadioGroup v-model="formValidate.label" @on-change="labelFun">

@@ -58,6 +58,9 @@
           Copyright ©2019 ajiuya.cn All Rights Reserved. 闽ICP备19022956号
         </div>
       </div>
+      <div class="backup" v-if="this.scrollTop > 180" @click="backTop">
+        <Icon type="md-arrow-round-up" size="24" />
+      </div>
     </div>
     <div class="mobile-bg" v-show="mobile==true">
       <!-- <div class="mobile-bg-hd"> -->
@@ -107,12 +110,17 @@
         </Card>
       </div>
       <router-view />
+      <div class="ft">
+        <div class="ft-inner">
+          <p>Copyright ©2019 ajiuya.cn All Rights Reserved. </p>
+          <p>闽ICP备19022956号</p>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 <script>
 import axios from 'axios'
-import qs from 'qs'
 export default {
   name: 'Index',
   data () {
@@ -125,7 +133,9 @@ export default {
       photoTotal: 0,
       mobile: false,
       mobileInfo: false,
-      window: 0
+      window: 0,
+      scrollTop: 0,
+      bg: ''
     }
   },
   created () {
@@ -151,6 +161,12 @@ export default {
       this.getDate()
       this.getTime()
     }, 10)
+    this.bg = document.getElementById('bg')
+    if (this.mobile === false) {
+      this.bg.addEventListener('scroll', this.handleScroll, true)
+    } else {
+      this.bg.addEventListener('touchmove', this.handleScroll, true)
+    }
   },
   methods: {
     getDate () {
@@ -203,11 +219,29 @@ export default {
     go (url) {
       this.mobileInfo = false
       this.$router.push({path: url})
+    },
+    handleScroll () {
+      // var bg = document.getElementById('bg')
+      this.scrollTop = this.bg.scrollTop
+      // console.log(this.scrollTop)
+    },
+    backTop () {
+      var timer = setInterval(() => {
+        if (this.scrollTop > 180) {
+          // var bg = document.getElementById('bg')
+          this.bg.scrollTop -= 100
+        } else {
+          // bg.scrollTop = 0
+          this.scrollTop = 0
+          clearInterval(timer)
+          this.bg.removeEventListener('scroll', this.handleScroll)
+        }
+      }, 10)
     }
   },
   destroyed () {
     // 离开该页面需要移除这个监听的事件，不然会报错
-    window.removeEventListener('scroll', this.handleScroll)
+    this.bg.removeEventListener('scroll', this.handleScroll)
   }
 }
 </script>
@@ -218,9 +252,10 @@ export default {
   left: 0;
   right: 0;
   bottom: 0;
-  /* background: #17233d; */
-  background: url(../assets/bg.jpg) 0 0;
-  background-size:auto 100%;
+  background: #17233d;
+  /* background: url(../assets/bg.jpg) 0 0;
+  background-size:auto 100%; */
+  /* background: rgb(218,178,115); */
   overflow: auto;
 }
 .hd {
@@ -250,10 +285,11 @@ export default {
 .hd .hd-inner h2 {
   font-size: 40px;
   font-weight: bold;
-  background: linear-gradient(to left, #FFFF4D, #111);
+  /* background: linear-gradient(to left, #FFFF4D, #111); */
+  background: linear-gradient(to left, #17233d, #fff);
   -webkit-background-clip: text;
   color: transparent;
-  -webkit-text-stroke: 1px #111;
+  /* -webkit-text-stroke: 1px #111; */
   /* text-shadow: 1px 1px 2px #eee; */
 }
 .hd .hd-inner .logo {
@@ -484,5 +520,33 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+.mobile-bg .ft {
+  height: auto;
+}
+.mobile-bg .ft .ft-inner {
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  font-size: 12px;
+  line-height: 1.3;
+  background: #fff;
+  box-sizing: border-box;
+}
+.backup {
+  position: fixed;
+  right: 30px;
+  bottom: 30px;
+  width: 40px;
+  height: 40px;
+  border: 1px solid #dcdee2;
+  border-radius: 3px;
+  color: #17233d;
+  background: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+  cursor: pointer;
 }
 </style>

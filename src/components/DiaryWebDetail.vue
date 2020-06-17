@@ -1,6 +1,5 @@
 <template>
   <div>
-
     <Card>
       <h2 slot="title" class="title">{{title}}</h2>
       <span slot="extra" class="extra" @click="$goRoute('/DiaryWeb')" >
@@ -32,9 +31,7 @@
         </div>
         <div class="content" v-html="content"></div>
       </div>
-      <div class="backup" v-if="this.scrollTop > 180" @click="backTop">
-        <Icon type="md-arrow-round-up" size="24" />
-      </div>
+
     </Card>
   </div>
 </template>
@@ -53,7 +50,6 @@ export default {
       label: '',
       content: '',
       isShow: true,
-      scrollTop: 0,
       mobile: false
     }
   },
@@ -64,7 +60,7 @@ export default {
       this.mobile = true
     }
     this.id = this.$route.query.id
-    console.log(this.id)
+    // console.log(this.id)
     var url = '/web/Diary_Detail.php'
     var param = {
       // id: this.$route.params.id
@@ -99,24 +95,7 @@ export default {
     }
   },
   methods: {
-    handleScroll () {
-      var bg = document.getElementById('bg')
-      this.scrollTop = bg.scrollTop
-      console.log(this.scrollTop)
-    },
-    backTop () {
-      var timer = setInterval(() => {
-        if (this.scrollTop > 180) {
-          var bg = document.getElementById('bg')
-          bg.scrollTop -= 100
-        } else {
-          // bg.scrollTop = 0
-          this.scrollTop = 0
-          clearInterval(timer)
-          window.removeEventListener('scroll', this.handleScroll)
-        }
-      }, 10)
-    }
+
   }
 }
 </script>
@@ -156,24 +135,5 @@ export default {
 .content {
   min-height: 500px;
 }
-.content * {
-  word-wrap: break-word;
-　word-break: break-all;
-}
-.backup {
-  position: fixed;
-  right: 30px;
-  bottom: 30px;
-  width: 40px;
-  height: 40px;
-  border: 1px solid #dcdee2;
-  border-radius: 3px;
-  color: #17233d;
-  background: #fff;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 100;
-  cursor: pointer;
-}
+
 </style>
