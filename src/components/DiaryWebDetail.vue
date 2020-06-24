@@ -2,7 +2,7 @@
   <div>
     <Card>
       <h2 slot="title" class="title">{{title}}</h2>
-      <span slot="extra" class="extra" @click="$goRoute('/DiaryWeb')" >
+      <span slot="extra" class="extra" @click="$goRoute('/')" >
         <Icon type="md-menu" size="24" />
       </span>
       <div class="loading" v-if="isShow">

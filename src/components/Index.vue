@@ -25,7 +25,7 @@
               <div class="info-nav">
                 <div class="name">阿久</div>
                 <ul class="list">
-                  <li @click="$goRoute('/DiaryWeb')">
+                  <li @click="$goRoute('/')">
                     <strong>日志</strong>
                     <span>{{diaryTotal}}</span>
                   </li>
@@ -156,7 +156,7 @@ export default {
     })
   },
   mounted () {
-    this.$router.push({path: '/DiaryWeb'})
+    // this.$router.push({path: '/DiaryWeb'})
     setInterval(() => {
       this.getDate()
       this.getTime()
@@ -359,10 +359,13 @@ export default {
   border-radius: 50%;
   background: #efefef;
   transform: translate(-50%, 0);
+  display: flex;
+    align-items: center;
+    justify-content: center;
 }
 .info .info-hd .headpic img {
   display: block;
-  width: 100%;
+  /* width: 100%; */
   height: 100%;
 }
 .info .info-hd .admin {

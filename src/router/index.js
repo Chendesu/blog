@@ -10,13 +10,14 @@ import Index from '@/components/Index'
 import DiaryWeb from '@/components/DiaryWeb'
 import PhotoWeb from '@/components/PhotoWeb'
 import DiaryWebDetail from '@/components/DiaryWebDetail'
+import my from '@/components/my'
 import Error from '@/components/error'
 
 Vue.use(Router)
 
 export default new Router({
-  // mode: 'history',
-  base: '/myblog/',
+  mode: 'history',
+  // base: '/myblog/',
   routes: [
     {
       path: '/',
@@ -27,9 +28,8 @@ export default new Router({
       },
       children: [
         {
-          path: '/DiaryWeb',
+          path: '/',
           name: 'DiaryWeb',
-          // redirect: '/DiaryWebDetail',
           component: DiaryWeb
         },
         {
@@ -43,6 +43,14 @@ export default new Router({
           component: PhotoWeb,
           meta: {
             title: '相册'
+          }
+        },
+        {
+          path: '/my',
+          name: 'my',
+          component: my,
+          meta: {
+            title: '关于我'
           }
         }
       ]
@@ -61,7 +69,7 @@ export default new Router({
       component: home,
       children: [
         {
-          path: '/User',
+          path: '/home',
           name: 'User',
           component: User,
           meta: {
@@ -69,7 +77,7 @@ export default new Router({
           }
         },
         {
-          path: '/Diary',
+          path: '/home/Diary',
           name: 'Diary',
           component: Diary,
           meta: {
@@ -77,7 +85,7 @@ export default new Router({
           }
         },
         {
-          path: '/Photo',
+          path: '/home/Photo',
           name: 'Photo',
           component: Photo,
           meta: {
@@ -85,7 +93,7 @@ export default new Router({
           }
         },
         {
-          path: '/Label',
+          path: '/home/Label',
           name: 'Label',
           component: Label,
           meta: {

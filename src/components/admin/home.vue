@@ -14,19 +14,19 @@
             <Layout>
                 <Sider hide-trigger :style="{position: 'fixed', height: '100vh', left: 0, top: '64px', overflow: 'auto'}">
                     <Menu :active-name="path" :theme="theme" width="auto">
-                      <MenuItem name="1" @click.native="$goRoute('/User')">
+                      <MenuItem name="1" @click.native="$goRoute({name: 'User'})">
                           <Icon type="md-contact" />
                           用户管理
                       </MenuItem>
-                      <MenuItem name="2" @click.native="$goRoute('/Diary')">
+                      <MenuItem name="2" @click.native="$goRoute({name: 'Diary'})">
                           <Icon type="md-document" />
                           文章管理
                       </MenuItem>
-                      <MenuItem name="3" @click.native="$goRoute('/Photo')">
+                      <MenuItem name="3" @click.native="$goRoute({name: 'Photo'})">
                           <Icon type="md-image" />
                           相册管理
                       </MenuItem>
-                      <MenuItem name="4" @click.native="$goRoute('/Label')">
+                      <MenuItem name="4" @click.native="$goRoute({name: 'Label'})">
                           <Icon type="md-pricetags" />
                           标签管理
                       </MenuItem>
@@ -63,7 +63,7 @@ export default {
     }
   },
   mounted: function () {
-    this.$router.push({path: '/User'})
+    // this.$router.push({path: '/User'})
     this.username = this.$store.state.username
     // console.log(this.$store.state.username)
     // console.log(this.$store.state.power)

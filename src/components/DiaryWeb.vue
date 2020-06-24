@@ -1,34 +1,33 @@
 <template>
 <div>
   <div class="main" v-show="mobile==false">
-    <List :class="['nav',{'fixed':scrollTop>115}]" id="nav">
-      <ListItem
-        :class="{'sel':idx==='all'}"
-        @click.native="clickFun('all')">
+    <div :class="['nav',{'fixed':scrollTop>115}]" id="nav">
+      <List>
+        <ListItem
+          :class="{'sel':idx==='all'}"
+          @click.native="clickFun('all')">
+          <a>
+            <Icon type="ios-keypad" size="24" />
+            <strong>全部</strong>
+          </a>
+        </ListItem>
+        <ListItem v-for="(item,index) in navList"
+        :key="item.id"
+        :class="{'sel':index===idx}"
+        @click.native="clickFun(index)">
+          <a>
+            <Icon :type="item.icon" size="24" />
+            <strong>{{item.label}}</strong>
+          </a>
+        </ListItem>
+      </List>
+      <div class="my" @click="$goRoute({name: 'my'})">
         <a>
-          <Icon type="ios-keypad" size="24" />
-          <strong>全部</strong>
-        </a>
-      </ListItem>
-      <ListItem v-for="(item,index) in navList"
-      :key="item.id"
-      :class="{'sel':index===idx}"
-      @click.native="clickFun(index)">
-        <a>
-          <Icon :type="item.icon" size="24" />
-          <strong>{{item.label}}</strong>
-        </a>
-      </ListItem>
-      <ListItem
-        :class="{'sel':idx==='my'}"
-        @click.native="clickFun('my')">
-        <a>
-          <!-- <Icon type="ios-keypad" size="24" /> -->
           <Icon type="ios-bowtie" size="24" />
           <strong>关于我</strong>
         </a>
-      </ListItem>
-    </List>
+      </div>
+    </div>
     <div class="content">
       <Card>
         <div slot="title">
@@ -222,9 +221,11 @@ export default {
 
       if (index === 'all') {
         this.labelKey = ''
-      } else if (index === 'my') {
-        this.$router.push({path: ''})
-      } else {
+      }
+      // else if (index === 'my') {
+      //   this.$router.push({path: '/my'})
+      // }
+      else {
         this.labelKey = this.navList[index].label
       }
       this.queryDiary(this.curPage, this.pageSize, this.labelKey)
@@ -269,15 +270,15 @@ export default {
       this.queryDiary(this.curPage, this.pageSize, this.labelKey)
     },
     goDetail (id) {
-      // this.$router.push({
-      //   name: 'DiaryWebDetail',
-      //   params: {
-      //     id: id
-      //   }
-      // })
       this.$router.push({
-        path: `DiaryWebDetail?id=${id}`
+        path: 'DiaryWebDetail',
+        query: {
+          id: id
+        }
       })
+      // this.$router.push({
+      //   path: `DiaryWebDetail?id=${id}`
+      // })
     },
     // 保存滚动值，这是兼容的写法
     handleScroll () {
@@ -316,7 +317,11 @@ export default {
   float: left;
   width: 150px;
   /* min-height: 200px; */
-  /* background: #e8eaec; */
+  background: #e8eaec;
+  border-radius: 5px;
+  box-shadow: 1px 1px 2px #999;
+  position: relative;
+  z-index: 2;
 }
 .wrap .main .nav.fixed {
   position: fixed;
@@ -347,9 +352,13 @@ export default {
 .wrap .main .nav a strong {
   font-weight: normal;
 }
+.wrap .main .nav .my {
+  padding: 12px 0;
+  border-top: 1px solid rgba(23, 35, 61, 0.1);
+}
 .wrap .main .content {
   float: right;
-  width: 610px;
+  width: 606px;
   /* min-height: 600px; */
   /* padding: 15px 27px;
   background: #fff; */
